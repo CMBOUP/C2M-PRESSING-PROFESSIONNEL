@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C2M - Pressing Professionnel & Gestion Intelligente</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--primary:#0f172a;--primary-light:#1e293b;--accent:#06b6d4;--accent-dark:#0891b2;--accent-glow:rgba(6,182,212,0.15);--gold:#f59e0b;--gold-light:#fbbf24;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;--bg:#f8fafc;--bg-dark:#0f172a;--card:#ffffff;--text:#1e293b;--text-light:#64748b;--border:#e2e8f0;--shadow:0 4px 6px -1px rgba(0,0,0,0.05),0 2px 4px -2px rgba(0,0,0,0.05);--shadow-lg:0 20px 25px -5px rgba(0,0,0,0.08),0 8px 10px -6px rgba(0,0,0,0.08);--shadow-glow:0 0 40px rgba(6,182,212,0.15);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+h1,h2,h3,h4,h5,h6{font-family:'Outfit',sans-serif}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.animate{animation:fadeInUp 0.8s ease forwards;opacity:0}
+.animate-delay-1{animation-delay:0.1s}
+.animate-delay-2{animation-delay:0.2s}
+.animate-delay-3{animation-delay:0.3s}
+.animate-delay-4{animation-delay:0.4s}
+
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;transition:all 0.4s ease;background:transparent}
+.navbar.scrolled{background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);box-shadow:var(--shadow);padding:0.8rem 2rem}
+.navbar.scrolled .nav-logo{color:var(--primary)}
+.navbar.scrolled .nav-links a{color:var(--text)}
+.navbar.scrolled .nav-links a:hover{color:var(--accent)}
+.nav-logo{font-family:'Outfit',sans-serif;font-size:1.8rem;font-weight:800;color:white;text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:color 0.3s}
+.nav-logo i{color:var(--accent);font-size:1.5rem}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;align-items:center;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.9);text-decoration:none;font-weight:500;font-size:0.95rem;transition:color 0.3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width 0.3s}
+.nav-links a:hover::after{width:100%}
+
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.5rem;border-radius:12px;font-weight:600;font-size:0.9rem;text-decoration:none;border:none;cursor:pointer;transition:all 0.3s ease;font-family:'Inter',sans-serif}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:white;box-shadow:0 4px 15px rgba(6,182,212,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(6,182,212,0.4)}
+.btn-outline{background:transparent;color:white;border:2px solid rgba(255,255,255,0.3)}
+.btn-outline:hover{background:rgba(255,255,255,0.1);border-color:white}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:white;box-shadow:0 4px 15px rgba(245,158,11,0.3)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(245,158,11,0.4)}
+.btn-danger{background:linear-gradient(135deg,var(--danger),#dc2626);color:white}
+.btn-sm{padding:0.5rem 1rem;font-size:0.8rem}
+.btn-full{width:100%;justify-content:center}
+
+.mobile-menu-btn{display:none;background:none;border:none;color:white;font-size:1.5rem;cursor:pointer}
+
+.hero{min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);display:flex;align-items:center;position:relative;overflow:hidden;padding:0 2rem}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:800px;height:800px;background:radial-gradient(circle,rgba(6,182,212,0.08) 0%,transparent 70%);border-radius:50%;animation:float 6s ease-in-out infinite}
+.hero::after{content:'';position:absolute;bottom:-30%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,0.05) 0%,transparent 70%);border-radius:50%;animation:float 8s ease-in-out infinite reverse}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;max-width:1400px;margin:0 auto;width:100%;align-items:center;position:relative;z-index:1}
+.hero-content h1{font-size:4rem;font-weight:800;color:white;line-height:1.1;margin-bottom:1.5rem}
+.hero-content h1 span{background:linear-gradient(135deg,var(--accent),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-content p{font-size:1.15rem;color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:2rem;max-width:500px}
+.hero-badges{display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.badge{display:flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:50px;color:rgba(255,255,255,0.8);font-size:0.85rem;font-weight:500}
+.badge i{color:var(--accent);font-size:0.8rem}
+.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-visual{position:relative;display:flex;justify-content:center;align-items:center}
+.dashboard-preview{width:100%;max-width:600px;background:rgba(255,255,255,0.03);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:2rem;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);animation:float 6s ease-in-out infinite}
+.preview-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.05)}
+.preview-title{color:white;font-weight:600;font-size:0.95rem}
+.preview-dots{display:flex;gap:0.4rem}
+.preview-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2)}
+.preview-dot.active{background:var(--accent)}
+.preview-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem}
+.preview-stat{background:rgba(255,255,255,0.04);border-radius:16px;padding:1.2rem;border:1px solid rgba(255,255,255,0.05)}
+.preview-stat-label{color:rgba(255,255,255,0.5);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.5rem}
+.preview-stat-value{color:white;font-size:1.5rem;font-weight:700;font-family:'Outfit',sans-serif}
+.preview-stat-value.up{color:var(--success)}
+.preview-stat-value.down{color:var(--danger)}
+.preview-chart{height:120px;background:rgba(255,255,255,0.02);border-radius:12px;display:flex;align-items:flex-end;padding:1rem;gap:0.5rem}
+.chart-bar{flex:1;background:linear-gradient(to top,var(--accent),rgba(6,182,212,0.3));border-radius:4px 4px 0 0}
+.chart-bar:nth-child(1){height:40%}.chart-bar:nth-child(2){height:60%}.chart-bar:nth-child(3){height:85%}.chart-bar:nth-child(4){height:45%}.chart-bar:nth-child(5){height:90%}.chart-bar:nth-child(6){height:70%}.chart-bar:nth-child(7){height:95%}
+
+.section{padding:6rem 2rem;max-width:1400px;margin:0 auto}
+.section-header{text-align:center;max-width:600px;margin:0 auto 4rem}
+.section-tag{display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;background:var(--accent-glow);color:var(--accent-dark);border-radius:50px;font-size:0.85rem;font-weight:600;margin-bottom:1rem}
+.section-title{font-size:2.8rem;font-weight:700;color:var(--primary);margin-bottom:1rem;line-height:1.2}
+.section-subtitle{color:var(--text-light);font-size:1.1rem;line-height:1.7}
+
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.service-card{background:var(--card);border-radius:24px;padding:2.5rem;border:1px solid var(--border);transition:all 0.4s ease;position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--accent),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform 0.4s ease}
+.service-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-icon{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.5rem;background:var(--accent-glow);color:var(--accent-dark)}
+.service-card h3{font-size:1.3rem;font-weight:700;margin-bottom:0.8rem;color:var(--primary)}
+.service-card p{color:var(--text-light);line-height:1.7;font-size:0.95rem}
+.service-features{margin-top:1.5rem;display:flex;flex-direction:column;gap:0.6rem}
+.service-feature{display:flex;align-items:center;gap:0.6rem;font-size:0.9rem;color:var(--text-light)}
+.service-feature i{color:var(--success);font-size:0.8rem}
+
+.features-section{background:linear-gradient(180deg,var(--bg) 0%,#f1f5f9 100%)}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.features-mockup{background:var(--primary);padding:2rem;border-radius:24px;border:1px solid rgba(255,255,255,0.1);box-shadow:var(--shadow-lg)}
+.mockup-nav{display:flex;gap:0.5rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.05);overflow-x:auto}
+.mockup-nav-item{padding:0.5rem 1rem;color:rgba(255,255,255,0.5);font-size:0.8rem;border-radius:8px;cursor:pointer;transition:all 0.3s;white-space:nowrap}
+.mockup-nav-item.active{background:rgba(6,182,212,0.15);color:var(--accent)}
+.mockup-content{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.mockup-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:1.2rem;text-align:center}
+.mockup-card-icon{width:40px;height:40px;border-radius:10px;background:rgba(6,182,212,0.1);display:flex;align-items:center;justify-content:center;margin:0 auto 0.8rem;color:var(--accent);font-size:1rem}
+.mockup-card h4{color:white;font-size:0.85rem;margin-bottom:0.3rem}
+.mockup-card p{color:rgba(255,255,255,0.4);font-size:0.75rem}
+.features-list{display:flex;flex-direction:column;gap:1.5rem}
+.feature-item{display:flex;gap:1.2rem;align-items:flex-start}
+.feature-item-icon{width:50px;height:50px;min-width:50px;border-radius:14px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);font-size:1.2rem}
+.feature-item h4{font-size:1.1rem;font-weight:600;margin-bottom:0.3rem;color:var(--primary)}
+.feature-item p{color:var(--text-light);font-size:0.9rem;line-height:1.6}
+
+.stats-section{background:var(--primary);position:relative;overflow:hidden;padding:5rem 2rem}
+.stats-section::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2306b6d4' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:0.5}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.stat-item{text-align:center;padding:2rem}
+.stat-number{font-size:3.5rem;font-weight:800;color:white;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:0.5rem}
+.stat-number span{color:var(--accent)}
+.stat-label{color:rgba(255,255,255,0.6);font-size:0.95rem;font-weight:500}
+
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem}
+.testimonial-card{background:var(--card);border-radius:24px;padding:2.5rem;border:1px solid var(--border);position:relative;transition:all 0.3s}
+.testimonial-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.testimonial-quote{position:absolute;top:1.5rem;right:2rem;font-size:4rem;color:var(--accent);opacity:0.1;font-family:Georgia,serif;line-height:1}
+.testimonial-text{color:var(--text);line-height:1.8;margin-bottom:1.5rem;font-size:1rem}
+.testimonial-author{display:flex;align-items:center;gap:1rem}
+.testimonial-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:1.1rem}
+.testimonial-info h4{font-size:1rem;font-weight:600;color:var(--primary)}
+.testimonial-info p{font-size:0.85rem;color:var(--text-light)}
+.testimonial-stars{color:var(--gold);font-size:0.85rem;margin-top:0.3rem}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1100px;margin:0 auto}
+.pricing-card{background:var(--card);border-radius:24px;padding:2.5rem;border:1px solid var(--border);text-align:center;transition:all 0.4s;position:relative}
+.pricing-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg)}
+.pricing-card.featured{border:2px solid var(--accent);transform:scale(1.05);box-shadow:var(--shadow-glow)}
+.pricing-card.featured:hover{transform:scale(1.05) translateY(-8px)}
+.pricing-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--accent-dark));color:white;padding:0.4rem 1.2rem;border-radius:50px;font-size:0.8rem;font-weight:600}
+.pricing-name{font-size:1.3rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem}
+.pricing-desc{color:var(--text-light);font-size:0.9rem;margin-bottom:1.5rem}
+.pricing-price{font-size:3rem;font-weight:800;color:var(--primary);font-family:'Outfit',sans-serif;margin-bottom:0.3rem}
+.pricing-price span{font-size:1rem;color:var(--text-light);font-weight:400}
+.pricing-features{text-align:left;margin:2rem 0;display:flex;flex-direction:column;gap:0.8rem}
+.pricing-feature{display:flex;align-items:center;gap:0.8rem;font-size:0.9rem;color:var(--text-light)}
+.pricing-feature i{color:var(--success);font-size:0.9rem}
+.pricing-feature.not i{color:var(--danger)}
+
+.contact-section{background:linear-gradient(135deg,#f8fafc 0%,#f1f5f9 100%)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;color:var(--primary)}
+.contact-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem}
+.contact-item-icon{width:50px;height:50px;min-width:50px;border-radius:14px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);font-size:1.2rem}
+.contact-item h4{font-size:1rem;font-weight:600;color:var(--primary);margin-bottom:0.2rem}
+.contact-item p,.contact-item a{color:var(--text-light);font-size:0.95rem;text-decoration:none;transition:color 0.3s}
+.contact-item a:hover{color:var(--accent)}
+.contact-form{background:var(--card);border-radius:24px;padding:2.5rem;border:1px solid var(--border);box-shadow:var(--shadow)}
+.form-group{margin-bottom:1.5rem}
+.form-group label{display:block;font-size:0.9rem;font-weight:600;color:var(--primary);margin-bottom:0.5rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:0.9rem 1rem;border:2px solid var(--border);border-radius:12px;font-family:'Inter',sans-serif;font-size:0.95rem;transition:all 0.3s;background:var(--bg)}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-glow)}
+.form-group textarea{min-height:120px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+.footer{background:var(--primary);color:white;padding:4rem 2rem 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1400px;margin:0 auto}
+.footer-brand .nav-logo{color:white;margin-bottom:1rem;display:inline-flex}
+.footer-brand p{color:rgba(255,255,255,0.6);line-height:1.8;font-size:0.9rem}
+.footer-social{display:flex;gap:1rem;margin-top:1.5rem}
+.footer-social a{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);text-decoration:none;transition:all 0.3s;border:1px solid rgba(255,255,255,0.1)}
+.footer-social a:hover{background:var(--accent);color:white;transform:translateY(-3px)}
+.footer-column h4{font-size:1rem;font-weight:600;margin-bottom:1.5rem;color:white}
+.footer-column ul{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
+.footer-column a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.9rem;transition:color 0.3s}
+.footer-column a:hover{color:var(--accent)}
+.footer-bottom{max-width:1400px;margin:3rem auto 0;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,0.4);font-size:0.85rem}
+
+.app-container{display:none;min-height:100vh;background:var(--bg)}
+.app-container.active{display:flex}
+.app-sidebar{width:260px;background:var(--primary);min-height:100vh;position:fixed;left:0;top:0;bottom:0;padding:1.5rem;display:flex;flex-direction:column;z-index:100;transition:transform 0.3s ease}
+.app-sidebar-header{padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.05);margin-bottom:1.5rem}
+.app-sidebar-header .nav-logo{color:white;font-size:1.5rem}
+.app-sidebar-nav{flex:1;display:flex;flex-direction:column;gap:0.3rem}
+.app-nav-item{display:flex;align-items:center;gap:0.8rem;padding:0.9rem 1rem;color:rgba(255,255,255,0.6);text-decoration:none;border-radius:12px;font-size:0.9rem;font-weight:500;transition:all 0.3s;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif}
+.app-nav-item:hover,.app-nav-item.active{background:rgba(6,182,212,0.1);color:var(--accent)}
+.app-nav-item i{width:20px;text-align:center}
+.app-sidebar-footer{padding-top:1rem;border-top:1px solid rgba(255,255,255,0.05)}
+.app-user{display:flex;align-items:center;gap:0.8rem;padding:0.8rem;background:rgba(255,255,255,0.03);border-radius:12px}
+.app-user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-dark));display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.85rem}
+.app-user-info h5{color:white;font-size:0.85rem;font-weight:600}
+.app-user-info p{color:rgba(255,255,255,0.4);font-size:0.75rem}
+
+.app-main{margin-left:260px;flex:1;min-height:100vh;padding:1.5rem 2rem}
+.app-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.app-header h1{font-size:1.5rem;font-weight:700;color:var(--primary)}
+.app-header-actions{display:flex;gap:1rem;align-items:center}
+.app-search{position:relative}
+.app-search input{padding:0.7rem 1rem 0.7rem 2.5rem;border:2px solid var(--border);border-radius:12px;font-family:'Inter',sans-serif;font-size:0.9rem;width:250px;transition:all 0.3s}
+.app-search input:focus{outline:none;border-color:var(--accent);width:300px}
+.app-search i{position:absolute;left:0.9rem;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:0.9rem}
+.app-notification{width:42px;height:42px;border-radius:12px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-light);cursor:pointer;transition:all 0.3s;position:relative}
+.app-notification:hover{color:var(--accent);border-color:var(--accent)}
+.app-notification .badge-dot{position:absolute;top:8px;right:8px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid var(--card)}
+
+.dash-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:2rem}
+.dash-kpi{background:var(--card);border-radius:20px;padding:1.5rem;border:1px solid var(--border);transition:all 0.3s}
+.dash-kpi:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.dash-kpi-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.dash-kpi-label{font-size:0.85rem;color:var(--text-light);font-weight:500}
+.dash-kpi-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.dash-kpi-icon.blue{background:var(--accent-glow);color:var(--accent-dark)}
+.dash-kpi-icon.green{background:rgba(16,185,129,0.1);color:var(--success)}
+.dash-kpi-icon.gold{background:rgba(245,158,11,0.1);color:var(--gold)}
+.dash-kpi-icon.red{background:rgba(239,68,68,0.1);color:var(--danger)}
+.dash-kpi-value{font-size:1.8rem;font-weight:700;color:var(--primary);font-family:'Outfit',sans-serif;margin-bottom:0.3rem}
+.dash-kpi-change{font-size:0.85rem;font-weight:500}
+.dash-kpi-change.up{color:var(--success)}
+.dash-kpi-change.down{color:var(--danger)}
+
+.dash-row{display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.dash-card{background:var(--card);border-radius:20px;padding:1.5rem;border:1px solid var(--border)}
+.dash-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.dash-card-title{font-size:1.1rem;font-weight:700;color:var(--primary)}
+.dash-card-action{font-size:0.85rem;color:var(--accent);text-decoration:none;font-weight:600;cursor:pointer}
+
+.chart-container{height:250px;display:flex;align-items:flex-end;gap:0.8rem;padding:1rem 0}
+.chart-bar-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:0.5rem}
+.chart-bar-visual{width:100%;background:linear-gradient(to top,var(--accent),rgba(6,182,212,0.3));border-radius:6px 6px 0 0;transition:height 0.5s ease;min-height:20px}
+.chart-bar-label{font-size:0.75rem;color:var(--text-light);font-weight:500}
+
+.activity-list{display:flex;flex-direction:column;gap:1rem}
+.activity-item{display:flex;align-items:center;gap:1rem;padding:0.8rem;border-radius:12px;transition:background 0.3s}
+.activity-item:hover{background:var(--bg)}
+.activity-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+.activity-icon.success{background:rgba(16,185,129,0.1);color:var(--success)}
+.activity-icon.warning{background:rgba(245,158,11,0.1);color:var(--gold)}
+.activity-icon.info{background:var(--accent-glow);color:var(--accent-dark)}
+.activity-text h5{font-size:0.9rem;font-weight:600;color:var(--primary)}
+.activity-text p{font-size:0.8rem;color:var(--text-light)}
+.activity-time{margin-left:auto;font-size:0.75rem;color:var(--text-light)}
+
+.table-container{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{text-align:left;padding:1rem;font-size:0.8rem;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid var(--border)}
+.data-table td{padding:1rem;font-size:0.9rem;color:var(--text);border-bottom:1px solid var(--border)}
+.data-table tr:hover td{background:var(--bg)}
+.status-badge{display:inline-flex;align-items:center;gap:0.4rem;padding:0.3rem 0.8rem;border-radius:50px;font-size:0.8rem;font-weight:600}
+.status-badge.completed{background:rgba(16,185,129,0.1);color:var(--success)}
+.status-badge.pending{background:rgba(245,158,11,0.1);color:var(--gold)}
+.status-badge.processing{background:var(--accent-glow);color:var(--accent-dark)}
+.status-badge.cancelled{background:rgba(239,68,68,0.1);color:var(--danger)}
+
+.app-page{display:none}
+.app-page.active{display:block;animation:fadeIn 0.4s ease}
+
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,0.8);backdrop-filter:blur(10px);z-index:2000;display:none;justify-content:center;align-items:center;animation:fadeIn 0.3s ease}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border-radius:24px;padding:2.5rem;width:100%;max-width:420px;box-shadow:var(--shadow-lg);animation:fadeInUp 0.4s ease;position:relative}
+.modal-header{text-align:center;margin-bottom:2rem}
+.modal-header .nav-logo{justify-content:center;margin-bottom:1rem;color:var(--primary);display:flex}
+.modal-header h2{font-size:1.5rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem}
+.modal-header p{color:var(--text-light);font-size:0.9rem}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;font-size:1.5rem;color:var(--text-light);cursor:pointer;transition:color 0.3s}
+.modal-close:hover{color:var(--danger)}
+
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--primary);color:white;padding:1rem 1.5rem;border-radius:12px;box-shadow:var(--shadow-lg);z-index:3000;display:none;align-items:center;gap:0.8rem;animation:slideInRight 0.4s ease}
+.toast.show{display:flex}
+.toast i{color:var(--accent)}
+
+.mobile-menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:999;display:none}
+.mobile-menu-overlay.active{display:block}
+
+@media(max-width:1024px){
+.hero-grid{grid-template-columns:1fr;text-align:center;gap:3rem}
+.hero-content h1{font-size:3rem}
+.hero-content p{margin:0 auto 2rem}
+.hero-badges{justify-content:center}
+.hero-buttons{justify-content:center}
+.features-grid{grid-template-columns:1fr}
+.stats-grid{grid-template-columns:repeat(2,1fr)}
+.pricing-grid{grid-template-columns:1fr}
+.pricing-card.featured{transform:none}
+.contact-grid{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr 1fr}
+.dash-kpi-grid{grid-template-columns:repeat(2,1fr)}
+.dash-row{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+.nav-links{display:none}
+.mobile-menu-btn{display:block}
+.hero-content h1{font-size:2.2rem}
+.section-title{font-size:2rem}
+.stats-grid{grid-template-columns:1fr}
+.footer-grid{grid-template-columns:1fr}
+.app-sidebar{transform:translateX(-100%)}
+.app-sidebar.open{transform:translateX(0)}
+.app-main{margin-left:0}
+.dash-kpi-grid{grid-template-columns:1fr}
+.form-row{grid-template-columns:1fr}
+.mockup-content{grid-template-columns:repeat(2,1fr)}
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-light)}
+</style>
+</head>
+<body>
+
+<!-- PUBLIC SITE -->
+<div id="public-site">
+<nav class="navbar" id="navbar">
+<a href="#" class="nav-logo"><i class="fas fa-tshirt"></i> C<span>2</span>M</a>
+<ul class="nav-links">
+<li><a href="#accueil">Accueil</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#fonctionnalites">Fonctionnalites</a></li>
+<li><a href="#tarifs">Tarifs</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><button class="btn btn-primary" onclick="openLogin()"><i class="fas fa-lock"></i> Espace Pro</button></li>
+</ul>
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+</nav>
+
+<section class="hero" id="accueil">
+<div class="hero-grid">
+<div class="hero-content">
+<div class="hero-badges animate animate-delay-1">
+<span class="badge"><i class="fas fa-bolt"></i> Rapide</span>
+<span class="badge"><i class="fas fa-shield-alt"></i> Fiable</span>
+<span class="badge"><i class="fas fa-chart-line"></i> Suivi en temps reel</span>
+</div>
+<h1 class="animate animate-delay-2">La gestion de pressing<br><span>reinventee</span></h1>
+<p class="animate animate-delay-3">C2M combine l'excellence du pressing traditionnel avec une technologie de pointe. Gerez vos commandes, vos clients et votre caisse en toute simplicite depuis une interface moderne et intuitive.</p>
+<div class="hero-buttons animate animate-delay-4">
+<a href="#contact" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Demander une demo</a>
+<a href="#fonctionnalites" class="btn btn-outline"><i class="fas fa-play-circle"></i> Decouvrir</a>
+</div>
+</div>
+<div class="hero-visual animate animate-delay-3">
+<div class="dashboard-preview">
+<div class="preview-header">
+<span class="preview-title">Tableau de bord C2M</span>
+<div class="preview-dots"><div class="preview-dot"></div><div class="preview-dot active"></div><div class="preview-dot"></div></div>
+</div>
+<div class="preview-stats">
+<div class="preview-stat"><div class="preview-stat-label">Commandes aujourd'hui</div><div class="preview-stat-value up">47</div></div>
+<div class="preview-stat"><div class="preview-stat-label">Chiffre d'affaires</div><div class="preview-stat-value">245 000 F</div></div>
+<div class="preview-stat"><div class="preview-stat-label">Clients actifs</div><div class="preview-stat-value up">128</div></div>
+<div class="preview-stat"><div class="preview-stat-label">En attente</div><div class="preview-stat-value down">12</div></div>
+</div>
+<div class="preview-chart">
+<div class="chart-bar"></div><div class="chart-bar"></div><div class="chart-bar"></div>
+<div class="chart-bar"></div><div class="chart-bar"></div><div class="chart-bar"></div><div class="chart-bar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="services">
+<div class="section-header">
+<div class="section-tag"><i class="fas fa-star"></i> Nos Services</div>
+<h2 class="section-title">Des solutions completes pour votre pressing</h2>
+<p class="section-subtitle">De la reception du linge a la livraison, C2M vous accompagne a chaque etape avec des outils professionnels et intuitifs.</p>
+</div>
+<div class="services-grid">
+<div class="service-card animate">
+<div class="service-icon"><i class="fas fa-tshirt"></i></div>
+<h3>Pressing & Nettoyage</h3>
+<p>Nettoyage professionnel de tous types de vetements avec traitement adapte aux matieres delicates et aux taches tenaces.</p>
+<div class="service-features">
+<div class="service-feature"><i class="fas fa-check-circle"></i> Nettoyage a sec premium</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Repassage haute qualite</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Traitement des taches</div>
+</div>
+</div>
+<div class="service-card animate animate-delay-1">
+<div class="service-icon" style="background:rgba(245,158,11,0.1);color:var(--gold)"><i class="fas fa-couch"></i></div>
+<h3>Textiles d'ameublement</h3>
+<p>Nettoyage et entretien de rideaux, housses, tapis et autres textiles de maison avec des techniques specialisees.</p>
+<div class="service-features">
+<div class="service-feature"><i class="fas fa-check-circle"></i> Rideaux et voilages</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Housses de canape</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Tapis et moquettes</div>
+</div>
+</div>
+<div class="service-card animate animate-delay-2">
+<div class="service-icon" style="background:rgba(16,185,129,0.1);color:var(--success)"><i class="fas fa-shoe-prints"></i></div>
+<h3>Entretien chaussures</h3>
+<p>Nettoyage, renovation et protection de vos chaussures en cuir, daim, nubuck et materiaux synthetiques.</p>
+<div class="service-features">
+<div class="service-feature"><i class="fas fa-check-circle"></i> Nettoyage cuir & daim</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Cirage et renovation</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Impermeabilisation</div>
+</div>
+</div>
+<div class="service-card animate">
+<div class="service-icon" style="background:rgba(239,68,68,0.1);color:var(--danger)"><i class="fas fa-gem"></i></div>
+<h3>Articles de luxe</h3>
+<p>Traitement specialise pour articles haut de gamme : costumes, robes de soiree, articles en soie et cachemire.</p>
+<div class="service-features">
+<div class="service-feature"><i class="fas fa-check-circle"></i> Costumes sur mesure</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Robes de soiree</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Accessoires de luxe</div>
+</div>
+</div>
+<div class="service-card animate animate-delay-1">
+<div class="service-icon" style="background:rgba(139,92,246,0.1);color:#8b5cf6"><i class="fas fa-concierge-bell"></i></div>
+<h3>Service entreprise</h3>
+<p>Solutions sur mesure pour hotels, restaurants, entreprises et collectivites avec contrats de maintenance.</p>
+<div class="service-features">
+<div class="service-feature"><i class="fas fa-check-circle"></i> Linge hotelier</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Uniformes professionnels</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Contrats entreprises</div>
+</div>
+</div>
+<div class="service-card animate animate-delay-2">
+<div class="service-icon" style="background:rgba(6,182,212,0.1);color:var(--accent-dark)"><i class="fas fa-truck"></i></div>
+<h3>Livraison a domicile</h3>
+<p>Service de collecte et livraison a domicile ou au bureau pour plus de confort et de flexibilite.</p>
+<div class="service-features">
+<div class="service-feature"><i class="fas fa-check-circle"></i> Collecte a domicile</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Livraison express</div>
+<div class="service-feature"><i class="fas fa-check-circle"></i> Suivi en temps reel</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section features-section" id="fonctionnalites">
+<div class="features-grid">
+<div>
+<div class="features-mockup">
+<div class="mockup-nav">
+<div class="mockup-nav-item active">Tableau de bord</div>
+<div class="mockup-nav-item">Commandes</div>
+<div class="mockup-nav-item">Clients</div>
+<div class="mockup-nav-item">Caisse</div>
+</div>
+<div class="mockup-content">
+<div class="mockup-card"><div class="mockup-card-icon"><i class="fas fa-shopping-bag"></i></div><h4>Commandes</h4><p>156 ce mois</p></div>
+<div class="mockup-card"><div class="mockup-card-icon"><i class="fas fa-users"></i></div><h4>Clients</h4><p>89 actifs</p></div>
+<div class="mockup-card"><div class="mockup-card-icon"><i class="fas fa-coins"></i></div><h4>CA</h4><p>1.2M FCFA</p></div>
+<div class="mockup-card"><div class="mockup-card-icon"><i class="fas fa-clipboard-check"></i></div><h4>Livrees</h4><p>134 ce mois</p></div>
+<div class="mockup-card"><div class="mockup-card-icon"><i class="fas fa-clock"></i></div><h4>En cours</h4><p>22 en traitement</p></div>
+<div class="mockup-card"><div class="mockup-card-icon"><i class="fas fa-chart-pie"></i></div><h4>Rapports</h4><p>12 generes</p></div>
+</div>
+</div>
+</div>
+<div>
+<div class="section-header" style="text-align:left;margin:0 0 2rem 0">
+<div class="section-tag" style="display:inline-flex"><i class="fas fa-cogs"></i> Application de gestion</div>
+<h2 class="section-title" style="font-size:2.2rem">Tout controler, simplement</h2>
+<p class="section-subtitle">Une suite complete d'outils pour piloter votre pressing comme un pro.</p>
+</div>
+<div class="features-list">
+<div class="feature-item">
+<div class="feature-item-icon"><i class="fas fa-tachometer-alt"></i></div>
+<div><h4>Tableau de bord intelligent</h4><p>Visualisez en un coup d'oeil vos indicateurs cles : commandes, chiffre d'affaires, clients et performances.</p></div>
+</div>
+<div class="feature-item">
+<div class="feature-item-icon" style="background:rgba(245,158,11,0.1);color:var(--gold)"><i class="fas fa-shopping-bag"></i></div>
+<div><h4>Gestion des commandes</h4><p>Creez, suivez et mettez a jour chaque commande du depot a la livraison avec un suivi en temps reel.</p></div>
+</div>
+<div class="feature-item">
+<div class="feature-item-icon" style="background:rgba(16,185,129,0.1);color:var(--success)"><i class="fas fa-users"></i></div>
+<div><h4>Fichier clients complet</h4><p>Historique des factures, preferences, fidelite et suivi commercial personnalise.</p></div>
+</div>
+<div class="feature-item">
+<div class="feature-item-icon" style="background:rgba(239,68,68,0.1);color:var(--danger)"><i class="fas fa-file-invoice-dollar"></i></div>
+<div><h4>Caisse et recus</h4><p>Gestion des paiements, generation de recus, suivi des depenses et cloture de caisse.</p></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="stats-section">
+<div class="stats-grid">
+<div class="stat-item animate"><div class="stat-number">2,500<span>+</span></div><div class="stat-label">Commandes traitees</div></div>
+<div class="stat-item animate animate-delay-1"><div class="stat-number">850<span>+</span></div><div class="stat-label">Clients satisfaits</div></div>
+<div class="stat-item animate animate-delay-2"><div class="stat-number">98<span>%</span></div><div class="stat-label">Taux de satisfaction</div></div>
+<div class="stat-item animate animate-delay-3"><div class="stat-number">24<span>h</span></div><div class="stat-label">Delai moyen</div></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-header">
+<div class="section-tag"><i class="fas fa-comments"></i> Temoignages</div>
+<h2 class="section-title">Ce que disent nos clients</h2>
+<p class="section-subtitle">La confiance de nos clients est notre plus grande reussite.</p>
+</div>
+<div class="testimonials-grid">
+<div class="testimonial-card animate">
+<div class="testimonial-quote">"</div>
+<p class="testimonial-text">C2M a completement transforme notre facon de travailler. La gestion des commandes est fluide et le suivi des clients est impeccable. Un outil indispensable.</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar">AD</div>
+<div class="testimonial-info">
+<h4>Amadou Diallo</h4>
+<p>Proprietaire, Pressing Etoile</p>
+<div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+</div>
+</div>
+</div>
+<div class="testimonial-card animate animate-delay-1">
+<div class="testimonial-quote">"</div>
+<p class="testimonial-text">Le service de livraison a domicile est un vrai plus. Mes clients adorent et moi je gagne du temps. L'interface de gestion est tres intuitive.</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar">FN</div>
+<div class="testimonial-info">
+<h4>Fatou Ndiaye</h4>
+<p>Directrice, Clean Pro</p>
+<div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+</div>
+</div>
+</div>
+<div class="testimonial-card animate animate-delay-2">
+<div class="testimonial-quote">"</div>
+<p class="testimonial-text">Les rapports et statistiques m'aident a prendre les bonnes decisions pour mon business. C2M est bien plus qu'un simple outil de gestion.</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar">MS</div>
+<div class="testimonial-info">
+<h4>Moussa Sow</h4>
+<p>Gerant, Pressing Royal</p>
+<div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="tarifs">
+<div class="section-header">
+<div class="section-tag"><i class="fas fa-tag"></i> Tarifs</div>
+<h2 class="section-title">Des formules adaptees a vos besoins</h2>
+<p class="section-subtitle">Choisissez la formule qui correspond a l'echelle de votre activite.</p>
+</div>
+<div class="pricing-grid">
+<div class="pricing-card animate">
+<div class="pricing-name">Starter</div>
+<div class="pricing-desc">Pour les petits pressings</div>
+<div class="pricing-price">15 000<span> FCFA/mois</span></div>
+<div class="pricing-features">
+<div class="pricing-feature"><i class="fas fa-check"></i> Jusqu'a 100 clients</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Gestion des commandes</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Caisse basique</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Recus automatiques</div>
+<div class="pricing-feature not"><i class="fas fa-times"></i> Rapports avances</div>
+<div class="pricing-feature not"><i class="fas fa-times"></i> Multi-utilisateurs</div>
+</div>
+<button class="btn btn-outline btn-full" style="color:var(--primary);border-color:var(--border)" onclick="showToast('Fonctionnalite a venir - Contactez-nous pour souscrire')">Commencer</button>
+</div>
+<div class="pricing-card featured animate animate-delay-1">
+<div class="pricing-badge">Populaire</div>
+<div class="pricing-name">Pro</div>
+<div class="pricing-desc">Pour les pressings en croissance</div>
+<div class="pricing-price">35 000<span> FCFA/mois</span></div>
+<div class="pricing-features">
+<div class="pricing-feature"><i class="fas fa-check"></i> Clients illimites</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Gestion avancee</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Caisse complete</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Recus & factures</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Rapports & stats</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> 3 utilisateurs</div>
+</div>
+<button class="btn btn-primary btn-full" onclick="showToast('Fonctionnalite a venir - Contactez-nous pour souscrire')">Choisir Pro</button>
+</div>
+<div class="pricing-card animate animate-delay-2">
+<div class="pricing-name">Entreprise</div>
+<div class="pricing-desc">Pour les reseaux de pressing</div>
+<div class="pricing-price">Sur mesure</div>
+<div class="pricing-features">
+<div class="pricing-feature"><i class="fas fa-check"></i> Tout inclus Pro</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Multi-sites</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> API & integrations</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Support prioritaire</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Formation incluse</div>
+<div class="pricing-feature"><i class="fas fa-check"></i> Utilisateurs illimites</div>
+</div>
+<button class="btn btn-gold btn-full" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Nous contacter</button>
+</div>
+</div>
+</section>
+
+<section class="section contact-section" id="contact">
+<div class="section-header">
+<div class="section-tag"><i class="fas fa-envelope"></i> Contact</div>
+<h2 class="section-title">Parlons de votre projet</h2>
+<p class="section-subtitle">Demandez une demonstration gratuite ou posez-nous vos questions.</p>
+</div>
+<div class="contact-grid">
+<div class="contact-info">
+<h3>Informations de contact</h3>
+<div class="contact-item">
+<div class="contact-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+<div><h4>Adresse</h4><p>Parcelles Assainies, Unite 7<br>Dakar, Senegal</p></div>
+</div>
+<div class="contact-item">
+<div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+<div><h4>Telephone</h4><a href="tel:+221777462219">77 746 22 19</a></div>
+</div>
+<div class="contact-item">
+<div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+<div><h4>Email</h4><a href="mailto:contact@c2m.sn">contact@c2m.sn</a></div>
+</div>
+<div class="contact-item">
+<div class="contact-item-icon"><i class="fas fa-clock"></i></div>
+<div><h4>Horaires</h4><p>Lun - Sam : 8h00 - 20h00<br>Dim : 9h00 - 14h00</p></div>
+</div>
+<div style="display:flex;gap:1rem;margin-top:2rem">
+<a href="https://wa.me/221777462219" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+<a href="tel:+221777462219" class="btn btn-gold"><i class="fas fa-phone"></i> Appeler</a>
+</div>
+</div>
+<div class="contact-form">
+<form onsubmit="event.preventDefault();showToast('Message envoye avec succes ! Nous vous recontacterons rapidement.');this.reset()">
+<div class="form-row">
+<div class="form-group"><label>Nom</label><input type="text" placeholder="Votre nom" required></div>
+<div class="form-group"><label>Prenom</label><input type="text" placeholder="Votre prenom" required></div>
+</div>
+<div class="form-group"><label>Email</label><input type="email" placeholder="votre@email.com" required></div>
+<div class="form-group"><label>Telephone</label><input type="tel" placeholder="77 XXX XX XX"></div>
+<div class="form-group"><label>Sujet</label>
+<select><option>Demande de demonstration</option><option>Devis personnalise</option><option>Support technique</option><option>Autre</option></select>
+</div>
+<div class="form-group"><label>Message</label><textarea placeholder="Decrivez votre projet..."></textarea></div>
+<button type="submit" class="btn btn-primary btn-full"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
+</form>
+</div>
+</div>
+</section>
+
+<footer class="footer">
+<div class="footer-grid">
+<div class="footer-brand">
+<a href="#" class="nav-logo"><i class="fas fa-tshirt"></i> C<span>2</span>M</a>
+<p>C2M est votre partenaire de confiance pour la gestion intelligente de pressing. Technologie de pointe, service premium, resultats garantis.</p>
+<div class="footer-social">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+<div class="footer-column">
+<h4>Services</h4>
+<ul>
+<li><a href="#services">Pressing & Nettoyage</a></li>
+<li><a href="#services">Textiles d'ameublement</a></li>
+<li><a href="#services">Entretien chaussures</a></li>
+<li><a href="#services">Articles de luxe</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h4>Application</h4>
+<ul>
+<li><a href="#fonctionnalites">Tableau de bord</a></li>
+<li><a href="#fonctionnalites">Gestion commandes</a></li>
+<li><a href="#fonctionnalites">Fichier clients</a></li>
+<li><a href="#fonctionnalites">Caisse & recus</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h4>Entreprise</h4>
+<ul>
+<li><a href="#contact">A propos</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="#tarifs">Tarifs</a></li>
+<li><a href="#" onclick="openLogin();return false">Espace Pro</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>2024 C2M. Tous droits reserves.</p>
+<p>Parcelles Assainies, Unite 7 - 77 746 22 19</p>
+</div>
+</footer>
+</div>
+
+<!-- DASHBOARD APP -->
+<div class="app-container" id="app-container">
+<div class="app-sidebar" id="app-sidebar">
+<div class="app-sidebar-header">
+<a href="#" class="nav-logo" onclick="returnToPublic()"><i class="fas fa-tshirt"></i> C<span>2</span>M</a>
+</div>
+<div class="app-sidebar-nav">
+<button class="app-nav-item active" onclick="showPage('dashboard')" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Tableau de bord</button>
+<button class="app-nav-item" onclick="showPage('orders')" data-page="orders"><i class="fas fa-shopping-bag"></i> Commandes</button>
+<button class="app-nav-item" onclick="showPage('clients')" data-page="clients"><i class="fas fa-users"></i> Clients</button>
+<button class="app-nav-item" onclick="showPage('cash')" data-page="cash"><i class="fas fa-coins"></i> Caisse</button>
+<button class="app-nav-item" onclick="showPage('services')" data-page="services"><i class="fas fa-tags"></i> Services</button>
+<button class="app-nav-item" onclick="showPage('expenses')" data-page="expenses"><i class="fas fa-wallet"></i> Depenses</button>
+<button class="app-nav-item" onclick="showPage('receipts')" data-page="receipts"><i class="fas fa-receipt"></i> Recus</button>
+<button class="app-nav-item" onclick="showPage('reports')" data-page="reports"><i class="fas fa-chart-bar"></i> Rapports</button>
+</div>
+<div class="app-sidebar-footer">
+<div class="app-user">
+<div class="app-user-avatar">AD</div>
+<div class="app-user-info">
+<h5>Amadou Diallo</h5>
+<p>Administrateur</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="app-main">
+<div class="app-header">
+<h1 id="page-title">Tableau de bord</h1>
+<div class="app-header-actions">
+<div class="app-search"><i class="fas fa-search"></i><input type="text" placeholder="Rechercher..."></div>
+<div class="app-notification" onclick="showToast('3 nouvelles notifications')"><i class="fas fa-bell"></i><span class="badge-dot"></span></div>
+<button class="btn btn-danger btn-sm" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Deconnexion</button>
+</div>
+</div>
+
+<!-- DASHBOARD PAGE -->
+<div class="app-page active" id="page-dashboard">
+<div class="dash-kpi-grid">
+<div class="dash-kpi">
+<div class="dash-kpi-header"><span class="dash-kpi-label">Commandes du jour</span><div class="dash-kpi-icon blue"><i class="fas fa-shopping-bag"></i></div></div>
+<div class="dash-kpi-value">47</div><div class="dash-kpi-change up"><i class="fas fa-arrow-up"></i> +12% vs hier</div>
+</div>
+<div class="dash-kpi">
+<div class="dash-kpi-header"><span class="dash-kpi-label">Chiffre d'affaires</span><div class="dash-kpi-icon green"><i class="fas fa-coins"></i></div></div>
+<div class="dash-kpi-value">245 000 F</div><div class="dash-kpi-change up"><i class="fas fa-arrow-up"></i> +8% vs hier</div>
+</div>
+<div class="dash-kpi">
+<div class="dash-kpi-header"><span class="dash-kpi-label">Clients actifs</span><div class="dash-kpi-icon gold"><i class="fas fa-users"></i></div></div>
+<div class="dash-kpi-value">128</div><div class="dash-kpi-change up"><i class="fas fa-arrow-up"></i> +5 ce mois</div>
+</div>
+<div class="dash-kpi">
+<div class="dash-kpi-header"><span class="dash-kpi-label">En attente</span><div class="dash-kpi-icon red"><i class="fas fa-clock"></i></div></div>
+<div class="dash-kpi-value">12</div><div class="dash-kpi-change down"><i class="fas fa-arrow-down"></i> -3 depuis hier</div>
+</div>
+</div>
+
+<div class="dash-row">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Evolution du chiffre d'affaires</span><a class="dash-card-action">Voir tout <i class="fas fa-arrow-right"></i></a></div>
+<div class="chart-container">
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:35%"></div><span class="chart-bar-label">Lun</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:55%"></div><span class="chart-bar-label">Mar</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:70%"></div><span class="chart-bar-label">Mer</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:45%"></div><span class="chart-bar-label">Jeu</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:85%"></div><span class="chart-bar-label">Ven</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:60%"></div><span class="chart-bar-label">Sam</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:90%"></div><span class="chart-bar-label">Dim</span></div>
+</div>
+</div>
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Activite recente</span><a class="dash-card-action">Tout voir</a></div>
+<div class="activity-list">
+<div class="activity-item"><div class="activity-icon success"><i class="fas fa-check"></i></div><div class="activity-text"><h5>Commande livree</h5><p>Commande #1247 - Mme Ndiaye</p></div><span class="activity-time">10 min</span></div>
+<div class="activity-item"><div class="activity-icon info"><i class="fas fa-plus"></i></div><div class="activity-text"><h5>Nouvelle commande</h5><p>Commande #1250 - Mr Sow</p></div><span class="activity-time">25 min</span></div>
+<div class="activity-item"><div class="activity-icon warning"><i class="fas fa-exclamation"></i></div><div class="activity-text"><h5>Commande urgente</h5><p>Commande #1238 - Retard</p></div><span class="activity-time">1h</span></div>
+<div class="activity-item"><div class="activity-icon success"><i class="fas fa-check"></i></div><div class="activity-text"><h5>Paiement recu</h5><p>15 000 FCFA - Commande #1245</p></div><span class="activity-time">2h</span></div>
+<div class="activity-item"><div class="activity-icon info"><i class="fas fa-user-plus"></i></div><div class="activity-text"><h5>Nouveau client</h5><p>Aminata Fall - Parcelles</p></div><span class="activity-time">3h</span></div>
+</div>
+</div>
+</div>
+
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Commandes recentes</span><a class="dash-card-action">Voir tout</a></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>ID</th><th>Client</th><th>Service</th><th>Montant</th><th>Statut</th><th>Date</th></tr></thead>
+<tbody>
+<tr><td>#1250</td><td>Moussa Sow</td><td>Pressing complet</td><td>8 500 F</td><td><span class="status-badge processing"><i class="fas fa-circle" style="font-size:6px"></i> En cours</span></td><td>24/06/2024</td></tr>
+<tr><td>#1249</td><td>Fatou Ndiaye</td><td>Nettoyage tapis</td><td>12 000 F</td><td><span class="status-badge pending"><i class="fas fa-circle" style="font-size:6px"></i> En attente</span></td><td>24/06/2024</td></tr>
+<tr><td>#1248</td><td>Amadou Diop</td><td>Costume + chemise</td><td>5 500 F</td><td><span class="status-badge completed"><i class="fas fa-circle" style="font-size:6px"></i> Livree</span></td><td>23/06/2024</td></tr>
+<tr><td>#1247</td><td>Aminata Fall</td><td>Robe de soiree</td><td>15 000 F</td><td><span class="status-badge completed"><i class="fas fa-circle" style="font-size:6px"></i> Livree</span></td><td>23/06/2024</td></tr>
+<tr><td>#1246</td><td>Oumar Ba</td><td>Linge hotelier</td><td>45 000 F</td><td><span class="status-badge processing"><i class="fas fa-circle" style="font-size:6px"></i> En cours</span></td><td>22/06/2024</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- ORDERS PAGE -->
+<div class="app-page" id="page-orders">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Gestion des commandes</span><button class="btn btn-primary btn-sm" onclick="showToast('Nouvelle commande creee avec succes')"><i class="fas fa-plus"></i> Nouvelle commande</button></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>ID</th><th>Client</th><th>Articles</th><th>Total</th><th>Avance</th><th>Reste</th><th>Statut</th><th>Actions</th></tr></thead>
+<tbody>
+<tr><td>#1250</td><td>Moussa Sow</td><td>5 articles</td><td>8 500 F</td><td>5 000 F</td><td>3 500 F</td><td><span class="status-badge processing">En cours</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1249</td><td>Fatou Ndiaye</td><td>2 articles</td><td>12 000 F</td><td>0 F</td><td>12 000 F</td><td><span class="status-badge pending">En attente</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1248</td><td>Amadou Diop</td><td>3 articles</td><td>5 500 F</td><td>5 500 F</td><td>0 F</td><td><span class="status-badge completed">Livree</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1247</td><td>Aminata Fall</td><td>1 article</td><td>15 000 F</td><td>15 000 F</td><td>0 F</td><td><span class="status-badge completed">Livree</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1246</td><td>Oumar Ba</td><td>25 articles</td><td>45 000 F</td><td>20 000 F</td><td>25 000 F</td><td><span class="status-badge processing">En cours</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1245</td><td>Mariama Sy</td><td>4 articles</td><td>6 200 F</td><td>6 200 F</td><td>0 F</td><td><span class="status-badge completed">Livree</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1244</td><td>Ibrahima Kane</td><td>8 articles</td><td>18 500 F</td><td>10 000 F</td><td>8 500 F</td><td><span class="status-badge processing">En cours</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td>#1243</td><td>Seynabou Diallo</td><td>2 articles</td><td>3 500 F</td><td>0 F</td><td>3 500 F</td><td><span class="status-badge pending">En attente</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- CLIENTS PAGE -->
+<div class="app-page" id="page-clients">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Gestion des clients</span><button class="btn btn-primary btn-sm" onclick="showToast('Nouveau client ajoute avec succes')"><i class="fas fa-plus"></i> Nouveau client</button></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>Client</th><th>Telephone</th><th>Adresse</th><th>Commandes</th><th>CA Total</th><th>Solde</th><th>Actions</th></tr></thead>
+<tbody>
+<tr><td><strong>Moussa Sow</strong></td><td>77 123 45 67</td><td>Parcelles U26</td><td>24</td><td>185 000 F</td><td>0 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Fatou Ndiaye</strong></td><td>76 234 56 78</td><td>Medina</td><td>18</td><td>142 000 F</td><td>12 000 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Amadou Diop</strong></td><td>77 345 67 89</td><td>Grand Yoff</td><td>31</td><td>210 000 F</td><td>0 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Aminata Fall</strong></td><td>78 456 78 90</td><td>Point E</td><td>12</td><td>95 000 F</td><td>0 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Oumar Ba</strong></td><td>76 567 89 01</td><td>Ouakam</td><td>45</td><td>520 000 F</td><td>25 000 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Mariama Sy</strong></td><td>77 678 90 12</td><td>Liberte 6</td><td>15</td><td>78 000 F</td><td>0 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Ibrahima Kane</strong></td><td>78 789 01 23</td><td>HLM</td><td>28</td><td>195 000 F</td><td>8 500 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+<tr><td><strong>Seynabou Diallo</strong></td><td>76 890 12 34</td><td>Castors</td><td>8</td><td>42 000 F</td><td>3 500 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-eye"></i></button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- CASH PAGE -->
+<div class="app-page" id="page-cash">
+<div class="dash-kpi-grid">
+<div class="dash-kpi"><div class="dash-kpi-header"><span class="dash-kpi-label">Solde caisse</span><div class="dash-kpi-icon green"><i class="fas fa-coins"></i></div></div><div class="dash-kpi-value">485 000 F</div><div class="dash-kpi-change up">+ 245 000 F aujourd'hui</div></div>
+<div class="dash-kpi"><div class="dash-kpi-header"><span class="dash-kpi-label">Encaissements</span><div class="dash-kpi-icon blue"><i class="fas fa-arrow-down"></i></div></div><div class="dash-kpi-value">245 000 F</div><div class="dash-kpi-change up">12 transactions</div></div>
+<div class="dash-kpi"><div class="dash-kpi-header"><span class="dash-kpi-label">Depenses</span><div class="dash-kpi-icon red"><i class="fas fa-arrow-up"></i></div></div><div class="dash-kpi-value">78 500 F</div><div class="dash-kpi-change down">8 transactions</div></div>
+<div class="dash-kpi"><div class="dash-kpi-header"><span class="dash-kpi-label">Ecart</span><div class="dash-kpi-icon gold"><i class="fas fa-balance-scale"></i></div></div><div class="dash-kpi-value">166 500 F</div><div class="dash-kpi-change up">Net positif</div></div>
+</div>
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Transactions du jour</span><button class="btn btn-primary btn-sm" onclick="showToast('Nouvelle transaction enregistree')"><i class="fas fa-plus"></i> Nouvelle transaction</button></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>Heure</th><th>Type</th><th>Description</th><th>Montant</th><th>Mode</th></tr></thead>
+<tbody>
+<tr><td>14:30</td><td><span class="status-badge completed">Encaissement</span></td><td>Commande #1245 - Mme Sy</td><td style="color:var(--success);font-weight:600">+ 6 200 F</td><td>Especes</td></tr>
+<tr><td>13:45</td><td><span class="status-badge completed">Encaissement</span></td><td>Commande #1247 - Mme Fall</td><td style="color:var(--success);font-weight:600">+ 15 000 F</td><td>Wave</td></tr>
+<tr><td>12:20</td><td><span class="status-badge cancelled">Depense</span></td><td>Achat produits nettoyage</td><td style="color:var(--danger);font-weight:600">- 12 500 F</td><td>Especes</td></tr>
+<tr><td>11:15</td><td><span class="status-badge completed">Encaissement</span></td><td>Commande #1248 - Mr Diop</td><td style="color:var(--success);font-weight:600">+ 5 500 F</td><td>Orange Money</td></tr>
+<tr><td>10:30</td><td><span class="status-badge cancelled">Depense</span></td><td>Facture electricite</td><td style="color:var(--danger);font-weight:600">- 25 000 F</td><td>Virement</td></tr>
+<tr><td>09:45</td><td><span class="status-badge completed">Encaissement</span></td><td>Avance commande #1250</td><td style="color:var(--success);font-weight:600">+ 5 000 F</td><td>Especes</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- SERVICES PAGE -->
+<div class="app-page" id="page-services">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Categories de services</span><button class="btn btn-primary btn-sm" onclick="showToast('Nouvelle categorie ajoutee')"><i class="fas fa-plus"></i> Ajouter</button></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>Categorie</th><th>Service</th><th>Prix unitaire</th><th>Commandes</th><th>CA</th><th>Actions</th></tr></thead>
+<tbody>
+<tr><td><strong>Pressing</strong></td><td>Chemise</td><td>1 500 F</td><td>156</td><td>234 000 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+<tr><td><strong>Pressing</strong></td><td>Pantalon</td><td>2 000 F</td><td>98</td><td>196 000 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+<tr><td><strong>Pressing</strong></td><td>Costume (complet)</td><td>5 500 F</td><td>45</td><td>247 500 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+<tr><td><strong>Nettoyage</strong></td><td>Robe</td><td>3 500 F</td><td>67</td><td>234 500 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+<tr><td><strong>Nettoyage</strong></td><td>Tapis (m2)</td><td>2 500 F</td><td>23</td><td>57 500 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+<tr><td><strong>Entretien</strong></td><td>Chaussures cuir</td><td>3 000 F</td><td>34</td><td>102 000 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+<tr><td><strong>Entretien</strong></td><td>Sac a main</td><td>4 500 F</td><td>12</td><td>54 000 F</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-edit"></i></button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- EXPENSES PAGE -->
+<div class="app-page" id="page-expenses">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Gestion des depenses</span><button class="btn btn-primary btn-sm" onclick="showToast('Nouvelle depense enregistree')"><i class="fas fa-plus"></i> Nouvelle depense</button></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>Date</th><th>Categorie</th><th>Description</th><th>Montant</th><th>Justificatif</th></tr></thead>
+<tbody>
+<tr><td>24/06/2024</td><td>Produits</td><td>Achat produits nettoyage</td><td>12 500 F</td><td><i class="fas fa-paperclip" style="color:var(--accent)"></i></td></tr>
+<tr><td>24/06/2024</td><td>Factures</td><td>Facture electricite</td><td>25 000 F</td><td><i class="fas fa-paperclip" style="color:var(--accent)"></i></td></tr>
+<tr><td>23/06/2024</td><td>Produits</td><td>Sacs plastiques & emballages</td><td>8 000 F</td><td><i class="fas fa-paperclip" style="color:var(--accent)"></i></td></tr>
+<tr><td>23/06/2024</td><td>Maintenance</td><td>Reparation machine pressing</td><td>35 000 F</td><td><i class="fas fa-paperclip" style="color:var(--accent)"></i></td></tr>
+<tr><td>22/06/2024</td><td>Salaires</td><td>Salaire employe #1</td><td>75 000 F</td><td>-</td></tr>
+<tr><td>22/06/2024</td><td>Transport</td><td>Livraison clients</td><td>5 500 F</td><td>-</td></tr>
+<tr><td>21/06/2024</td><td>Produits</td><td>Detartrants & assouplissants</td><td>18 000 F</td><td><i class="fas fa-paperclip" style="color:var(--accent)"></i></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- RECEIPTS PAGE -->
+<div class="app-page" id="page-receipts">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Recus emis</span><button class="btn btn-primary btn-sm" onclick="showToast('Recu genere avec succes')"><i class="fas fa-plus"></i> Generer un recu</button></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>N Recu</th><th>Date</th><th>Client</th><th>Commande</th><th>Montant</th><th>Type</th><th>Actions</th></tr></thead>
+<tbody>
+<tr><td>REC-2024-0125</td><td>24/06/2024</td><td>Mariama Sy</td><td>#1245</td><td>6 200 F</td><td><span class="status-badge completed">Paiement total</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-print"></i></button></td></tr>
+<tr><td>REC-2024-0124</td><td>24/06/2024</td><td>Aminata Fall</td><td>#1247</td><td>15 000 F</td><td><span class="status-badge completed">Paiement total</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-print"></i></button></td></tr>
+<tr><td>REC-2024-0123</td><td>23/06/2024</td><td>Amadou Diop</td><td>#1248</td><td>5 500 F</td><td><span class="status-badge completed">Paiement total</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-print"></i></button></td></tr>
+<tr><td>REC-2024-0122</td><td>23/06/2024</td><td>Moussa Sow</td><td>#1250</td><td>5 000 F</td><td><span class="status-badge pending">Avance</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-print"></i></button></td></tr>
+<tr><td>REC-2024-0121</td><td>22/06/2024</td><td>Oumar Ba</td><td>#1246</td><td>20 000 F</td><td><span class="status-badge pending">Avance</span></td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-print"></i></button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- REPORTS PAGE -->
+<div class="app-page" id="page-reports">
+<div class="dash-row">
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Chiffre d'affaires mensuel</span><a class="dash-card-action">Exporter PDF</a></div>
+<div class="chart-container">
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:40%"></div><span class="chart-bar-label">Jan</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:55%"></div><span class="chart-bar-label">Fev</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:45%"></div><span class="chart-bar-label">Mar</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:70%"></div><span class="chart-bar-label">Avr</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:60%"></div><span class="chart-bar-label">Mai</span></div>
+<div class="chart-bar-item"><div class="chart-bar-visual" style="height:85%"></div><span class="chart-bar-label">Juin</span></div>
+</div>
+</div>
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Repartition par service</span></div>
+<div style="padding:1rem 0">
+<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div style="width:12px;height:12px;border-radius:3px;background:var(--accent)"></div><div style="flex:1"><div style="display:flex;justify-content:space-between"><span style="font-size:0.9rem;font-weight:500">Pressing</span><span style="font-weight:700">45%</span></div><div style="height:6px;background:var(--border);border-radius:3px;margin-top:0.3rem"><div style="width:45%;height:100%;background:var(--accent);border-radius:3px"></div></div></div></div>
+<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div style="width:12px;height:12px;border-radius:3px;background:var(--gold)"></div><div style="flex:1"><div style="display:flex;justify-content:space-between"><span style="font-size:0.9rem;font-weight:500">Nettoyage</span><span style="font-weight:700">30%</span></div><div style="height:6px;background:var(--border);border-radius:3px;margin-top:0.3rem"><div style="width:30%;height:100%;background:var(--gold);border-radius:3px"></div></div></div></div>
+<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem"><div style="width:12px;height:12px;border-radius:3px;background:var(--success)"></div><div style="flex:1"><div style="display:flex;justify-content:space-between"><span style="font-size:0.9rem;font-weight:500">Entretien</span><span style="font-weight:700">15%</span></div><div style="height:6px;background:var(--border);border-radius:3px;margin-top:0.3rem"><div style="width:15%;height:100%;background:var(--success);border-radius:3px"></div></div></div></div>
+<div style="display:flex;align-items:center;gap:1rem"><div style="width:12px;height:12px;border-radius:3px;background:var(--danger)"></div><div style="flex:1"><div style="display:flex;justify-content:space-between"><span style="font-size:0.9rem;font-weight:500">Autres</span><span style="font-weight:700">10%</span></div><div style="height:6px;background:var(--border);border-radius:3px;margin-top:0.3rem"><div style="width:10%;height:100%;background:var(--danger);border-radius:3px"></div></div></div></div>
+</div>
+</div>
+</div>
+<div class="dash-card">
+<div class="dash-card-header"><span class="dash-card-title">Rapports disponibles</span></div>
+<div class="table-container">
+<table class="data-table">
+<thead><tr><th>Rapport</th><th>Periode</th><th>Date generation</th><th>Actions</th></tr></thead>
+<tbody>
+<tr><td><strong>Journal des operations</strong></td><td>24/06/2024</td><td>24/06/2024 14:30</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-download"></i></button> <button class="btn btn-sm btn-outline" style="padding:0.3rem 0.6rem;font-size:0.75rem;color:var(--primary);border-color:var(--border)"><i class="fas fa-print"></i></button></td></tr>
+<tr><td><strong>Journal de caisse</strong></td><td>24/06/2024</td><td>24/06/2024 14:30</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-download"></i></button> <button class="btn btn-sm btn-outline" style="padding:0.3rem 0.6rem;font-size:0.75rem;color:var(--primary);border-color:var(--border)"><i class="fas fa-print"></i></button></td></tr>
+<tr><td><strong>Chiffre d'affaires mensuel</strong></td><td>Juin 2024</td><td>01/06/2024 00:00</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-download"></i></button> <button class="btn btn-sm btn-outline" style="padding:0.3rem 0.6rem;font-size:0.75rem;color:var(--primary);border-color:var(--border)"><i class="fas fa-print"></i></button></td></tr>
+<tr><td><strong>Listing clients</strong></td><td>Tous</td><td>15/06/2024 10:00</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-download"></i></button> <button class="btn btn-sm btn-outline" style="padding:0.3rem 0.6rem;font-size:0.75rem;color:var(--primary);border-color:var(--border)"><i class="fas fa-print"></i></button></td></tr>
+<tr><td><strong>Articles les plus vendus</strong></td><td>Juin 2024</td><td>20/06/2024 09:00</td><td><button class="btn btn-sm btn-primary" style="padding:0.3rem 0.6rem;font-size:0.75rem"><i class="fas fa-download"></i></button> <button class="btn btn-sm btn-outline" style="padding:0.3rem 0.6rem;font-size:0.75rem;color:var(--primary);border-color:var(--border)"><i class="fas fa-print"></i></button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="login-modal">
+<div class="modal">
+<button class="modal-close" onclick="closeLogin()"><i class="fas fa-times"></i></button>
+<div class="modal-header">
+<a href="#" class="nav-logo"><i class="fas fa-tshirt"></i> C<span>2</span>M</a>
+<h2>Connexion Espace Pro</h2>
+<p>Accedez a votre tableau de bord de gestion</p>
+</div>
+<form onsubmit="event.preventDefault();doLogin()">
+<div class="form-group"><label>Email</label><input type="email" placeholder="admin@c2m.sn" value="admin@c2m.sn" id="login-email"></div>
+<div class="form-group"><label>Mot de passe</label><input type="password" placeholder="Votre mot de passe" value="password" id="login-password"></div>
+<button type="submit" class="btn btn-primary btn-full"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
+</form>
+<p style="text-align:center;margin-top:1.5rem;color:var(--text-light);font-size:0.85rem">Mot de passe oublie ? <a href="#" style="color:var(--accent);text-decoration:none;font-weight:600">Reinitialiser</a></p>
+</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-info-circle"></i><span id="toast-message">Message</span></div>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu-overlay" id="mobile-overlay" onclick="toggleMobileMenu()"></div>
+
+<script>
+// Navbar scroll effect
+window.addEventListener('scroll', function() {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) { navbar.classList.add('scrolled'); }
+    else { navbar.classList.remove('scrolled'); }
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
+        }
+    });
+});
+
+// Login modal
+function openLogin() { document.getElementById('login-modal').classList.add('active'); }
+function closeLogin() { document.getElementById('login-modal').classList.remove('active'); }
+function doLogin() {
+    document.getElementById('login-modal').classList.remove('active');
+    document.getElementById('public-site').style.display = 'none';
+    document.getElementById('app-container').classList.add('active');
+    document.body.style.background = 'var(--bg)';
+    showToast('Bienvenue, Amadou Diallo !');
+}
+function logout() {
+    document.getElementById('app-container').classList.remove('active');
+    document.getElementById('public-site').style.display = 'block';
+    document.body.style.background = 'var(--bg)';
+    showToast('Deconnexion reussie');
+}
+function returnToPublic() {
+    logout();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// App navigation
+function showPage(pageId) {
+    document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.app-nav-item').forEach(n => n.classList.remove('active'));
+    const page = document.getElementById('page-' + pageId);
+    if (page) page.classList.add('active');
+    const nav = document.querySelector('.app-nav-item[data-page="' + pageId + '"]');
+    if (nav) nav.classList.add('active');
+    const titles = {
+        dashboard: 'Tableau de bord',
+        orders: 'Gestion des commandes',
+        clients: 'Gestion des clients',
+        cash: 'Gestion de la caisse',
+        services: 'Categories de services',
+        expenses: 'Gestion des depenses',
+        receipts: 'Gestion des recus',
+        reports: 'Rapports et statistiques'
+    };
+    document.getElementById('page-title').textContent = titles[pageId] || 'Tableau de bord';
+}
+
+// Toast
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toast-message').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Mobile menu
+function toggleMobileMenu() {
+    document.getElementById('app-sidebar').classList.toggle('open');
+    document.getElementById('mobile-overlay').classList.toggle('active');
+}
+
+// Intersection Observer for animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.animate').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
